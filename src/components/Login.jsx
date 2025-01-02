@@ -1,53 +1,57 @@
 import React, { useState } from "react";
+import axios from "axios";
 //import "/src/components/Login.css";
 
+const Login = () => {
+    const url = "https://railway.bookreview.techtrain.dev";
+    const [errorMessage, setErrorMessage] = useState("");
+    const [successMessage, setSuccessMessage] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
-const Login = (props) => {
-    const [emailError, setEmailError] = useState("");
-    const [passwordError, setPasswordError] = useState("");
+    const onLogin = () => {
+        const data = {
+            email: email,
+            password: password
+        };
 
-    const validate = (e) => {
-        e.preventDefault();
-        let valid = true;
-
-        if (!e.target.email.value.includes("@")) {
-            setEmailError("正しいメールアドレスを入力してください");
-            valid = false;
-        } else {
-            setEmailError("");
-        }
-
-        if (e.target.password.value.length < 6) {
-            setPasswordError("パスワードは6文字以上である必要があります");
-            valid = false;
-        } else {
-            setPasswordError("");
-        }
-
-        if (valid) {
-            console.log("ログイン成功");
-        }
+        axios
+            .post(`${url}/signin` , data, {
+                headers: {
+                    'Content-Type' : 'application/json'
+                }
+            })
+            .then((res) => {
+                const token = res.data.token;
+                setSuccessMessage("サインインに成功しました!");
+                setErrorMessage("");
+            })
+            .catch((err) => {
+                setErrorMessage(`サインインに失敗しました: ${err.response?.message || err.message}`);
+                setSuccessMessage("");
+            });
     };
 
     return (
-        <div className="container">
-            <b>{props.title}</b>
-            <hr />
-            <form onSubmit={validate}>
-                <div>
-                    <label>メールアドレス：</label>
-                    <input type="text" name="email" />
-                    {emailError && <p className="email-error">{emailError}</p>}
-                </div>
-                <div className="spacer" />
-                <div>
-                    <label>パスワード：</label>
-                    <input type="text" name="password" />
-                    {passwordError && <p className="password-error">{passwordError}</p>}
-                </div>
-                <div className="spacer" />
-                <button type="submit">ログイン</button>
-            </form>
+        <div>
+            <main className="login">
+                <h2>ログイン</h2>
+                <label>メールアドレス：</label>
+                <input
+                    type="email"
+                    className="email"
+                    onChange={(e) => setEmail(e.target.value)}
+                ></input>
+                <br />
+                <label>パスワード：</label>
+                <input
+                    type="password"
+                    className="password"
+                    onChange={(e) => setPassword(e.target.value)}
+                ></input>
+                <br />
+                <button type="button" className="login-button" onClick={onLogin}>ログイン</button>
+            </main>
         </div>
     );
 };
