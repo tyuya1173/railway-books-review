@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Pagination from "./Pagination";
 
 const GetBookList = () => {
     const [books, setBooks] = useState([]);
     const [error, setError] = useState("");
     const [offset, setOffset] = useState(0);
 
-    const fetchBooks = async(offset) => {
-        try{
+    const fetchBooks = async (offset) => {
+        try {
             const token = localStorage.getItem("token");
-            if(!token){
+            if (!token) {
                 console.error("Token is not available in localStorage");
             } else {
                 console.log("Authorization Token:", token);
@@ -24,7 +25,7 @@ const GetBookList = () => {
             });
             setBooks(response.data);
             setError("");
-        } catch (err){
+        } catch (err) {
             setError(err.response?.data?.ErrorMessageJP || "データの取得に失敗しました。");
         }
     };
@@ -32,6 +33,16 @@ const GetBookList = () => {
     useEffect(() => {
         fetchBooks(offset);
     }, [offset]);
+
+    const  handleNext = () => {
+        setOffset(offset + 10);
+    };
+
+    const handlePrev = () => {
+        if(offset > 0){
+            setOffset(offset - 10);
+        }
+    };
 
     return (
         <div className="book-list">
@@ -54,18 +65,14 @@ const GetBookList = () => {
                         </a>
                     </li>
                 ))}
+                <Pagination
+                    offset={offset}
+                    onNext={handleNext}
+                    onPrev={handlePrev}
+                />
             </ul>
-            <div className="book-list_pagination">
-                <button
-                    className="book-list_pagination-btn"
-                    disabled={offset === 0}
-                    onClick={() => setOffset(offset - 10)}
-                >
-                    次へ
-                </button>
-            </div>
         </div>
-    )
-}
+    );
+};
 
 export default GetBookList;
