@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
     const url = "https://railway.bookreview.techtrain.dev"
@@ -8,6 +9,8 @@ const SignUp = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+
+    const navigate = useNavigate();
     
     const onSignUp = () => {
         const data = {
@@ -25,6 +28,7 @@ const SignUp = () => {
                 const token = res.data.token;
                 setSuccessMessage("登録が完了しました");
                 setErrorMessage("");
+                setTimeout(() => navigate("/login"), 2000);
             })
             .catch((err) => {
                 setErrorMessage(`サインアップに失敗しました ${err}`)
@@ -54,6 +58,10 @@ const SignUp = () => {
                         onChange={(e) => setPassword(e.target.value)}></input>
                     <br />
                     <button type="button" className="signup-button" onClick={onSignUp}>新規登録</button>
+                    <p>{errorMessage || successMessage}</p>
+                    <p>
+                        ログインは<a href="/components/Login">こちら</a>。
+                    </p>
             </main>
         </div>
     )
