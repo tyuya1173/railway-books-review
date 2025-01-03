@@ -13,6 +13,7 @@ const Login = () => {
     const navigate = useNavigate();
 
     const onLogin = () => {
+        event.preventDefault();
         const data = {
             email: email,
             password: password
@@ -29,7 +30,7 @@ const Login = () => {
                 setSuccessMessage("サインインに成功しました!");
                 setErrorMessage("");
 
-                localStorage.setItem("authToken", token);
+                localStorage.setItem("token", token);
                 setTimeout(() => navigate("/dashboard"), 2000);
             })
             .catch((err) => {
