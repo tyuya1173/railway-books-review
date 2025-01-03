@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Compressor from "compressorjs";
 
 const SignUp = () => {
     const url = "https://railway.bookreview.techtrain.dev"
@@ -9,6 +10,7 @@ const SignUp = () => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [iconFile, setIconFile] = useState(null);
 
     const navigate = useNavigate();
     
@@ -28,13 +30,49 @@ const SignUp = () => {
                 const token = res.data.token;
                 setSuccessMessage("登録が完了しました");
                 setErrorMessage("");
-                setTimeout(() => navigate("/login"), 2000);
+
+                if(iconFile){
+                    comopressAndUploadIcon(iconFile, token);
+                } else {
+                    setTimeout(() => navigate("/components/Login"), 2000);
+                }
             })
             .catch((err) => {
                 setErrorMessage(`サインアップに失敗しました ${err}`)
                 setSuccessMessage("");
             })
     }
+
+    const comopressAndUploadIcon = (file, toke) => {
+        new Compressor(file, {
+            quality: 0.8,
+            maxWidth: 800,
+            success(compressedFile){
+                uploadIcon(compressedFile, token);
+            },
+        });
+    };
+
+    const uploadIcon = (compressedFile, token) => {
+        const formData = new FormData();
+        formData.append("icon", compressedFile);
+
+        axios
+            .post(`${url}/uploads`, formData, {
+                headers: {
+                    "Content-Type" : "multipart/form-data",
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            .then((res) => {
+                console.log("アイコンアップロード成功：", res.data.iconUrl);
+                setTimeout(() => navigate("/components/Login"), 2000);
+            })
+            .catch((err) => {
+                setErrorMessage(`アイコンアップロードに失敗しました: ${err.response?.data?.ErrorMessageJP || err.message}`);
+            });
+    };
+
     return(
         <div>
             <main className="signup">
@@ -56,6 +94,13 @@ const SignUp = () => {
                         type="password" 
                         className="password"
                         onChange={(e) => setPassword(e.target.value)}></input>
+                    <br />
+                    <label>アイコン画像：</label>
+                    <input
+                        type="file"
+                        accept="image/jpeg, image/png"
+                        onChange={(e) => setIconFile(e.target.files[0])}
+                    ></input>
                     <br />
                     <button type="button" className="signup-button" onClick={onSignUp}>新規登録</button>
                     <p>{errorMessage || successMessage}</p>
