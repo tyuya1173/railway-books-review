@@ -1,0 +1,49 @@
+/* BEMの命名規則に基づくクラス */
+.book-list {
+    @apply container mx-auto my-8 p-4 bg-gray-100 rounded shadow;
+  }
+  
+  .book-list_title {
+    @apply text-2xl font-bold mb-4 text-center;
+  }
+  
+  .book-list_error {
+    @apply text-red-500 text-center mb-4;
+  }
+  
+  .book-list_items {
+    @apply space-y-4;
+  }
+  
+  .book-list_item {
+    @apply p-4 bg-white rounded shadow hover:shadow-lg transition-shadow;
+  }
+  
+  .book-list_item-title {
+    @apply text-lg font-bold mb-2;
+  }
+  
+  .book-list_item-detail {
+    @apply text-gray-600 mb-2;
+  }
+  
+  .book-list_item-reviewer {
+    @apply text-sm text-gray-500;
+  }
+  
+  .book-list_item-review {
+    @apply text-sm text-gray-700 mb-2;
+  }
+  
+  .book-list_item-link {
+    @apply text-blue-500 underline hover:text-blue-700;
+  }
+  
+  .book-list_pagination {
+    @apply flex justify-between mt-4;
+  }
+  
+  .book-list_pagination-btn {
+    @apply px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed;
+  }
+  
