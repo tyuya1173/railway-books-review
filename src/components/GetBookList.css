@@ -1,49 +1,62 @@
-/* BEMの命名規則に基づくクラス */
 .book-list {
-    @apply container mx-auto my-8 p-4 bg-gray-100 rounded shadow;
-  }
-  
-  .book-list_title {
-    @apply text-2xl font-bold mb-4 text-center;
-  }
-  
-  .book-list_error {
-    @apply text-red-500 text-center mb-4;
-  }
-  
-  .book-list_items {
-    @apply space-y-4;
-  }
-  
-  .book-list_item {
-    @apply p-4 bg-white rounded shadow hover:shadow-lg transition-shadow;
-  }
-  
-  .book-list_item-title {
-    @apply text-lg font-bold mb-2;
-  }
-  
-  .book-list_item-detail {
-    @apply text-gray-600 mb-2;
-  }
-  
-  .book-list_item-reviewer {
-    @apply text-sm text-gray-500;
-  }
-  
-  .book-list_item-review {
-    @apply text-sm text-gray-700 mb-2;
-  }
-  
-  .book-list_item-link {
-    @apply text-blue-500 underline hover:text-blue-700;
-  }
-  
-  .book-list_pagination {
-    @apply flex justify-between mt-4;
-  }
-  
-  .book-list_pagination-btn {
-    @apply px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed;
-  }
-  
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1rem;
+  font-family: "Arial", sans-serif;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.book-list__title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.book-list__error {
+  color: #f87171;
+  margin-bottom: 1rem;
+}
+
+.book-list__items {
+  display: block;
+  list-style: none;
+  flex-direction: column;
+  gap: 1rem;
+  display: grid;
+  width: 100%;
+}
+
+.book-list__item {
+  background-color: #f9fafb;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.book-list__item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 8px -2px rgba(0, 0, 0, 0.2);
+}
+
+.book-list__item-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.book-list__item-detail,
+.book-list__item-reviewer,
+.book-list__item-review {
+  margin-bottom: 0.25rem;
+}
+
+.book-list__item-link {
+  color: #2563eb;
+  text-decoration: underline;
+  font-weight: bold;
+}
