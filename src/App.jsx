@@ -1,12 +1,13 @@
+import React from 'react';
 import './App.css';
+//import Header from './components/Header';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
 import Home from './components/Home';
 import GetBookList from './components/GetBookList';
 import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 
-function App() {
-
+const App = () => {
   return (
     <>
     <BrowserRouter>

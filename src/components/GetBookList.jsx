@@ -2,11 +2,15 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Pagination from "./Pagination";
 import "./GetBookList.css";
+import { useSearchParams } from "react-router-dom";
 
 const GetBookList = () => {
   const [books, setBooks] = useState([]);
   const [error, setError] = useState("");
-  const [offset, setOffset] = useState(0);
+  const [searchParams, setSearchParams] = useSearchParams();
+  console.log(searchParams.get("offset"));
+  const initialOffset = parseInt(searchParams.get("offset"), 10) || 0;
+  const [offset, setOffset] = useState(initialOffset);
 
   const fetchBooks = async (offset) => {
     try {
@@ -23,8 +27,9 @@ const GetBookList = () => {
   };
 
   useEffect(() => {
+    setSearchParams({ offset });
     fetchBooks(offset);
-  }, [offset]);
+  }, [offset, setSearchParams]);
 
   return (
     <div className="book-list">
