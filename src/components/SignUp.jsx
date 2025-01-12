@@ -31,10 +31,12 @@ const SignUp = () => {
                 setSuccessMessage("登録が完了しました");
                 setErrorMessage("");
 
+                localStorage.setItem("token", token);
+
                 if(iconFile){
-                    comopressAndUploadIcon(iconFile, token);
+                    compressAndUploadIcon(iconFile, token);
                 } else {
-                    setTimeout(() => navigate("/components/Login"), 2000);
+                    setTimeout(() => navigate("/components/MyPage"), 2000);
                 }
             })
             .catch((err) => {
@@ -43,7 +45,7 @@ const SignUp = () => {
             })
     }
 
-    const comopressAndUploadIcon = (file, toke) => {
+    const compressAndUploadIcon = (file, token) => {
         new Compressor(file, {
             quality: 0.8,
             maxWidth: 800,
@@ -66,7 +68,7 @@ const SignUp = () => {
             })
             .then((res) => {
                 console.log("アイコンアップロード成功：", res.data.iconUrl);
-                setTimeout(() => navigate("/components/Login"), 2000);
+                setTimeout(() => navigate("/components/MyPage"), 2000);
             })
             .catch((err) => {
                 setErrorMessage(`アイコンアップロードに失敗しました: ${err.response?.data?.ErrorMessageJP || err.message}`);

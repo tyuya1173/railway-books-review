@@ -31,7 +31,7 @@ const Login = () => {
                 setErrorMessage("");
 
                 localStorage.setItem("token", token);
-                setTimeout(() => navigate("/dashboard"), 2000);
+                setTimeout(() => navigate("/components/MyPage"), 2000);
             })
             .catch((err) => {
                 setErrorMessage(`サインインに失敗しました: ${err.response?.message || err.message}`);
