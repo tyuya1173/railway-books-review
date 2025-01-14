@@ -68,7 +68,7 @@ const SignUp = () => {
             })
             .then((res) => {
                 console.log("アイコンアップロード成功：", res.data.iconUrl);
-                setTimeout(() => navigate("/components/MyPage"), 2000);
+                setTimeout(() => navigate("/components/GetBookList"), 2000);
             })
             .catch((err) => {
                 setErrorMessage(`アイコンアップロードに失敗しました: ${err.response?.data?.ErrorMessageJP || err.message}`);

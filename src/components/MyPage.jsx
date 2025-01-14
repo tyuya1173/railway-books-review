@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const MyPage = () => {
     const url = "https://railway.bookreview.techtrain.dev/users";
@@ -45,6 +46,9 @@ const MyPage = () => {
 
     return (
         <div>
+            <header>
+                <Link to = "/components/Profile">プロフィール編集</Link>
+            </header>
             <main className="my-page">
                 <h2>マイページ</h2>
                 {errorMessage && <p>{errorMessage}</p>}

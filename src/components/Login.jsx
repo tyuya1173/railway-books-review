@@ -30,8 +30,8 @@ const Login = () => {
                 setSuccessMessage("サインインに成功しました!");
                 setErrorMessage("");
 
-                localStorage.setItem("token", token);
-                setTimeout(() => navigate("/components/MyPage"), 2000);
+                localStorage.setItem("token", token); // トークンを保存しログイン状態を保持
+                setTimeout(() => navigate("/components/GetBookList"), 2000);
             })
             .catch((err) => {
                 setErrorMessage(`サインインに失敗しました: ${err.response?.message || err.message}`);
