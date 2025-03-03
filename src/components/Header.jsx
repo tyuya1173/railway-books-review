@@ -1,15 +1,47 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import axios from "axios";
 import "./Header.css";
 
 const Header = ({ token, setToken }) => {
   const navigate = useNavigate();
-  const userName = localStorage.getItem("name");
+  const [userName, setUserName] = useState(localStorage.getItem("name") || "");
+  const [userIcon, setUserIcon] = useState("");  // ユーザーアイコンの状態を追加
+  const [errorMessage, setErrorMessage] = useState("");  // エラーメッセージの状態
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem("token");
+
+    if (storedToken) {
+      axios
+        .get("https://railway.bookreview.techtrain.dev/users", {
+          headers: {
+            Authorization: `Bearer ${storedToken}`,
+          },
+        })
+        .then((res) => {
+          console.log("ユーザー情報:", res.data);
+          const { name, iconUrl } = res.data;
+          setUserName(name);  // ユーザー名を更新
+          setUserIcon(iconUrl || "");  // アイコンURLを更新、存在しない場合は空文字
+          localStorage.setItem("name", name);  // localStorage に保存
+        })
+        .catch((err) => {
+          console.error("API エラー:", err);
+          setErrorMessage("ユーザー情報の取得に失敗しました");
+        });
+    } else {
+      console.warn("トークンが存在しません。ログインしていない可能性があります。");
+      setErrorMessage("ログインしていないため、情報を取得できません。");
+    }
+  }, [token]);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("name");
     setToken(null);
+    setUserName("");  // ログアウト時にユーザー名をクリア
+    setUserIcon("");  // アイコンもクリア
     navigate("/login");
   };
 
@@ -23,7 +55,15 @@ const Header = ({ token, setToken }) => {
           {token ? (
             <>
               <li><Link to="/mypage">マイページ</Link></li>
-              <span className="userName">{userName}さん</span>
+              <li><Link to="/profile">プロフィール編集</Link></li>
+              {errorMessage ? (
+                <p>{errorMessage}</p>  // エラーメッセージの表示
+              ) : (
+                <>
+                  {userIcon && <img src={userIcon} alt="ユーザーアイコン" style={{ width: "30px", height: "30px", borderRadius: "50%" }} />}
+                  <span className="userName">{userName} さん</span>
+                </>
+              )}
               <button onClick={handleLogout} className="button">ログアウト</button>
             </>
           ) : (

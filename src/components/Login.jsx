@@ -18,8 +18,11 @@ const Login = ({ setToken }) => {
                 headers: { 'Content-Type': 'application/json' }
             })
             .then((res) => {
+                console.log(res.data);
                 const token = res.data.token;
+                const name = res.data.name || "ゲスト";
                 localStorage.setItem("token", token);
+                localStorage.setItem("name", name);
                 setToken(token);
                 navigate("/booklist");
             })
