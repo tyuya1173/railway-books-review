@@ -3,8 +3,9 @@
   margin: 0 auto;
   padding: 1rem;
   font-family: "Arial", sans-serif;
+  display: flex; /* 追加: フレックスボックスを使って中央揃え */
   flex-direction: column;
-  align-items: stretch;
+  align-items: center; /* 追加: アイテムを中央揃え */
 }
 
 .book-list__title {
@@ -19,11 +20,8 @@
 }
 
 .book-list__items {
-  display: block;
-  list-style: none;
-  flex-direction: column;
+  display: grid; /* 変更: display: block は不要で、グリッドレイアウトに */
   gap: 1rem;
-  display: grid;
   width: 100%;
 }
 
@@ -35,7 +33,7 @@
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   width: 100%;
   max-width: 400px;
-  margin: 0 auto;
+  margin: 0 auto; /* 中央揃え */
 }
 
 .book-list__item:hover {

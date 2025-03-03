@@ -25,9 +25,10 @@ a:hover {
 body {
   margin: 0;
   display: flex;
-  place-items: center;
+  justify-content: center; /* 横方向中央揃え */
+  align-items: center;     /* 縦方向中央揃え */
   min-width: 320px;
-  min-height: 100vh;
+  min-height: 100vh;       /* 画面全体の高さを占める */
 }
 
 h1 {
