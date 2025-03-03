@@ -1,46 +1,41 @@
-import React from 'react';
-import './App.css';
-//import Header from './components/Header';
+import React, { useEffect, useState } from 'react';
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import Login from './components/Login';
 import SignUp from './components/SignUp';
 import Home from './components/Home';
 import GetBookList from './components/GetBookList';
 import MyPage from './components/MyPage';
 import Profile from './components/Profile';
-import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
+import Header from './components/Header';
 
 const App = () => {
+  const [token, setToken] = useState(localStorage.getItem("token"));
+
+  // ローカルストレージの変更を検知する
+  useEffect(() => {
+    const handleStorageChange = () => {
+      setToken(localStorage.getItem("token"));
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, []);
+
   return (
-    <>
     <BrowserRouter>
-      <ul>
-        <li>
-          <Link to = "./components/Home">ホーム</Link>
-        </li>
-        <li>
-          <Link to = "./components/Login">ログイン</Link>
-        </li>
-        <li>
-          <Link to = "./components/SignUp">新規登録</Link>
-        </li>
-        <li>
-          <Link to = "./components/GetBookList">書籍レビュー一覧</Link>
-        </li>
-        <li>
-          <Link to = "./components/MyPage">マイページ</Link>
-        </li>
-      </ul>
+      <Header token={token} setToken={setToken} />
       <Routes>
-        <Route path='/components/Home' element={<Home />} />
-        <Route path='/components/Login' element={<Login />} />
-        <Route path='/components/SignUp' element={<SignUp />} />
-        <Route path='/components/MyPage' element={<MyPage />} />
-        <Route path='/components/Profile' element={<Profile />} />
-        <Route path='/components/GetBookList' element={<GetBookList />} />
+        <Route path='/' element={<Home />} />
+        <Route path='/login' element={token ? <Navigate to='/booklist' /> : <Login setToken={setToken} />} />
+        <Route path='/signup' element={token ? <Navigate to='/booklist' /> : <SignUp setToken={setToken} />} />
+        <Route path='/booklist' element={token ? <GetBookList /> : <Navigate to='/login' />} />
+        <Route path='/mypage' element={token ? <MyPage /> : <Navigate to='/login' />} />
+        <Route path='/profile' element={token ? <Profile /> : <Navigate to='/login' />} />
       </Routes>
     </BrowserRouter>
-    </>
-  )
-}
+  );
+};
 
-export default App
+export default App;

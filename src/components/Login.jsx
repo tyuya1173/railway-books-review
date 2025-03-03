@@ -1,68 +1,45 @@
 import React, { useState } from "react";
 import axios from "axios";
-import "/src/components/Login.css";
 import { useNavigate } from "react-router-dom";
 
-const Login = () => {
+const Login = ({ setToken }) => {
     const url = "https://railway.bookreview.techtrain.dev";
     const [errorMessage, setErrorMessage] = useState("");
-    const [successMessage, setSuccessMessage] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     const navigate = useNavigate();
 
     const onLogin = () => {
-        event.preventDefault();
-        const data = {
-            email: email,
-            password: password
-        };
+        const data = { email, password };
 
         axios
-            .post(`${url}/signin` , data, {
-                headers: {
-                    'Content-Type' : 'application/json'
-                }
+            .post(`${url}/signin`, data, {
+                headers: { 'Content-Type': 'application/json' }
             })
             .then((res) => {
                 const token = res.data.token;
-                setSuccessMessage("サインインに成功しました!");
-                setErrorMessage("");
-
-                localStorage.setItem("token", token); // トークンを保存しログイン状態を保持
-                setTimeout(() => navigate("/components/GetBookList"), 2000);
+                localStorage.setItem("token", token);
+                setToken(token);
+                navigate("/booklist");
             })
             .catch((err) => {
-                setErrorMessage(`サインインに失敗しました: ${err.response?.message || err.message}`);
-                setSuccessMessage("");
+                setErrorMessage(`サインインに失敗しました: ${err.response?.data?.message || err.message}`);
             });
     };
 
     return (
         <div>
-            <main className="login">
-                <h2>ログイン</h2>
-                <label>メールアドレス：</label>
-                <input
-                    type="email"
-                    className="email"
-                    onChange={(e) => setEmail(e.target.value)}
-                ></input>
-                <br />
-                <label>パスワード：</label>
-                <input
-                    type="password"
-                    className="password"
-                    onChange={(e) => setPassword(e.target.value)}
-                ></input>
-                <br />
-                <button type="button" className="login-button" onClick={onLogin}>ログイン</button>
-                <p>{errorMessage || successMessage}</p>
-                <p>
-                    新規登録は<a href="/components/SignUp">こちら</a>。
-                </p>
-            </main>
+            <h2>ログイン</h2>
+            <label>メールアドレス：</label>
+            <input type="email" onChange={(e) => setEmail(e.target.value)} />
+            <br />
+            <label>パスワード：</label>
+            <input type="password" onChange={(e) => setPassword(e.target.value)} />
+            <br />
+            <button type="button" onClick={onLogin}>ログイン</button>
+            <p>{errorMessage}</p>
+            <p>新規登録は<a href="/signup">こちら</a>。</p>
         </div>
     );
 };
