@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import Login from './components/Login';
 import SignUp from './components/SignUp';
@@ -7,12 +7,12 @@ import GetBookList from './components/GetBookList';
 import MyPage from './components/MyPage';
 import Profile from './components/Profile';
 import Header from './components/Header';
-import Post from './components/PostBookReview.jsx';
+import Post from './components/PostBookReview';
+import DetailBookReview from './components/DetailBookReview';
 
 const App = () => {
   const [token, setToken] = useState(localStorage.getItem("token"));
 
-  // ローカルストレージの変更を検知する
   useEffect(() => {
     const handleStorageChange = () => {
       setToken(localStorage.getItem("token"));
@@ -35,6 +35,7 @@ const App = () => {
         <Route path='/mypage' element={token ? <MyPage /> : <Navigate to='/login' />} />
         <Route path='/profile' element={token ? <Profile /> : <Navigate to='/login' />} />
         <Route path='/new' element={token ? <Post /> : <Navigate to='/login' />} />
+        <Route path='/detail/:id' element={<DetailBookReview />} />  {/* 詳細画面のルート追加 */}
       </Routes>
     </BrowserRouter>
   );
