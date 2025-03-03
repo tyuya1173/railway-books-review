@@ -9,6 +9,7 @@ import Profile from './components/Profile';
 import Header from './components/Header';
 import Post from './components/PostBookReview';
 import DetailBookReview from './components/DetailBookReview';
+import EditBookReview from './components/DetailBookReviewEdit';
 
 const App = () => {
   const [token, setToken] = useState(localStorage.getItem("token"));
@@ -35,7 +36,8 @@ const App = () => {
         <Route path='/mypage' element={token ? <MyPage /> : <Navigate to='/login' />} />
         <Route path='/profile' element={token ? <Profile /> : <Navigate to='/login' />} />
         <Route path='/new' element={token ? <Post /> : <Navigate to='/login' />} />
-        <Route path='/detail/:id' element={<DetailBookReview />} />  {/* 詳細画面のルート追加 */}
+        <Route path='/detail/:id' element={<DetailBookReview />} />
+        <Route path='/edit/:id' element={token ? <EditBookReview /> : <Navigate to='/login' />} /> 
       </Routes>
     </BrowserRouter>
   );

@@ -1,9 +1,12 @@
+// GetBookList.jsx
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Pagination from "./Pagination";
 import { useNavigate } from "react-router-dom";  // useNavigate をインポート
-import "./GetBookList.css";
 import { useSearchParams } from "react-router-dom";
+import { Link } from "react-router-dom"; // Link をインポート
+import "./GetBookList.css";
 
 const GetBookList = () => {
   const [books, setBooks] = useState([]);
@@ -35,8 +38,14 @@ const GetBookList = () => {
 
   // 書籍をクリックすると詳細画面に遷移
   const handleBookClick = (id) => {
-    console.log(`書籍ID: ${id} の詳細を表示`);
+    console.log("詳細ページに遷移:", id);  // デバッグ用
     navigate(`/detail/${id}`);  // 詳細ページに遷移
+  };
+
+  // 編集画面へ遷移
+  const handleEditClick = (id) => {
+    console.log("編集ページに遷移:", id);  // デバッグ用
+    navigate(`/edit/${id}`);  // 編集ページに遷移
   };
 
   return (
@@ -45,14 +54,29 @@ const GetBookList = () => {
       {error && <p className="book-list__error">{error}</p>}
       <ul className="book-list__items">
         {books.map((book) => (
-          <li key={book.id} className="book-list__item" onClick={() => handleBookClick(book.id)}>
+          <li key={book.id} className="book-list__item">
             <h2 className="book-list__item-title">{book.title}</h2>
             <p className="book-list__item-detail">{book.detail}</p>
             <p className="book-list__item-reviewer">レビュー者: {book.reviewer}</p>
             <p className="book-list__item-review">レビュー: {book.review}</p>
-            <a href={book.url} className="book-list__item-link" target="_blank" rel="noopener noreferrer">
+            
+            {/* 詳細を見るリンクを Link コンポーネントに変更 */}
+            <Link to={`/detail/${book.id}`} className="book-list__item-link">
               詳細を見る
-            </a>
+            </Link>
+
+            {/* ログインユーザーと一致する場合に編集ボタンを表示 */}
+            {localStorage.getItem("name") === book.reviewer && (
+              <button 
+                onClick={(e) => {
+                  e.stopPropagation();  // イベントのバブリングを停止
+                  handleEditClick(book.id);  // 編集ボタンのクリック
+                }} 
+                className="book-list__edit-button"
+              >
+                編集
+              </button>
+            )}
           </li>
         ))}
       </ul>
