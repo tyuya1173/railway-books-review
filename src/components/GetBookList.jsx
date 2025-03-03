@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Pagination from "./Pagination";
+import { useNavigate } from "react-router-dom";  // useNavigateをインポート
 import "./GetBookList.css";
 import { useSearchParams } from "react-router-dom";
 
@@ -8,6 +9,7 @@ const GetBookList = () => {
   const [books, setBooks] = useState([]);
   const [error, setError] = useState("");
   const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();  // navigateフックを定義
   console.log(searchParams.get("offset"));
   const initialOffset = parseInt(searchParams.get("offset"), 10) || 0;
   const [offset, setOffset] = useState(initialOffset);
@@ -49,6 +51,11 @@ const GetBookList = () => {
         ))}
       </ul>
       <Pagination offset={offset} onNext={() => setOffset(offset + 10)} onPrev={() => setOffset(offset - 10)} />
+      
+      {/* 投稿画面へのリンクを追加 */}
+      <button className="book-list__post-button" onClick={() => navigate("/new")}>
+        新規書籍レビューを投稿する
+      </button>
     </div>
   );
 };

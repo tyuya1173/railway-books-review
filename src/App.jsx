@@ -7,6 +7,7 @@ import GetBookList from './components/GetBookList';
 import MyPage from './components/MyPage';
 import Profile from './components/Profile';
 import Header from './components/Header';
+import Post from './components/PostBookReview.jsx';
 
 const App = () => {
   const [token, setToken] = useState(localStorage.getItem("token"));
@@ -33,6 +34,7 @@ const App = () => {
         <Route path='/booklist' element={token ? <GetBookList /> : <Navigate to='/login' />} />
         <Route path='/mypage' element={token ? <MyPage /> : <Navigate to='/login' />} />
         <Route path='/profile' element={token ? <Profile /> : <Navigate to='/login' />} />
+        <Route path='/new' element={token ? <Post /> : <Navigate to='/login' />} />
       </Routes>
     </BrowserRouter>
   );

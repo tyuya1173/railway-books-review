@@ -56,6 +56,7 @@ const Header = ({ token, setToken }) => {
             <>
               <li><Link to="/mypage">マイページ</Link></li>
               <li><Link to="/profile">プロフィール編集</Link></li>
+              <li><Link to="/new">書籍投稿</Link></li> {/* 書籍投稿へのリンクを追加 */}
               {errorMessage ? (
                 <p>{errorMessage}</p>  // エラーメッセージの表示
               ) : (
