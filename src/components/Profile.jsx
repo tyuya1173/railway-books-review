@@ -74,6 +74,8 @@ const Profile = () => {
             .then(() => {
                 setSuccessMessage("ユーザー情報を更新しました。");
                 setErrorMessage("");
+                // ページをリロードして変更を反映
+                window.location.reload();
             })
             .catch(() => {
                 setErrorMessage("ユーザー情報の更新に失敗しました。");

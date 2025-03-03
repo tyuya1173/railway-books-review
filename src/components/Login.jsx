@@ -24,7 +24,9 @@ const Login = ({ setToken }) => {
                 localStorage.setItem("token", token);
                 localStorage.setItem("name", name);
                 setToken(token);
-                navigate("/booklist");
+
+                // ページリロード
+                window.location.reload();
             })
             .catch((err) => {
                 setErrorMessage(`サインインに失敗しました: ${err.response?.data?.message || err.message}`);

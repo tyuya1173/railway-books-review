@@ -10,4 +10,8 @@ button {
     margin-left: 170px;
     background: black;
     color: red;
+    width: auto;
+    padding: 10px 20px;
+    text-align: center;
+    white-space: nowrap;
 }
