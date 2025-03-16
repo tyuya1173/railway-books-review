@@ -1,6 +1,6 @@
 // GetBookList.jsx
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import Pagination from "./Pagination";
 import { useNavigate } from "react-router-dom";  // useNavigate をインポート
@@ -35,12 +35,6 @@ const GetBookList = () => {
     setSearchParams({ offset });
     fetchBooks(offset);
   }, [offset, setSearchParams]);
-
-  // 書籍をクリックすると詳細画面に遷移
-  const handleBookClick = (id) => {
-    console.log("詳細ページに遷移:", id);  // デバッグ用
-    navigate(`/detail/${id}`);  // 詳細ページに遷移
-  };
 
   // 編集画面へ遷移
   const handleEditClick = (id) => {

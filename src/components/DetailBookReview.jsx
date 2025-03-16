@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams, useNavigate } from "react-router-dom";  // useNavigate に変更
-
+import { useParams } from "react-router-dom";
 // 書籍情報を取得する関数
 const fetchBookDetails = async (id, token) => {
   try {
@@ -34,7 +33,6 @@ const DetailBookReview = () => {
   const [bookDetails, setBookDetails] = useState(null);  // 書籍情報を保存
   const [isLoading, setIsLoading] = useState(true);  // ローディング状態
   const [error, setError] = useState("");  // エラーメッセージ
-  const navigate = useNavigate();  // useNavigate を使用
 
   const token = localStorage.getItem("token"); // ローカルストレージからトークンを取得
 

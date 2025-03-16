@@ -3,7 +3,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  background-color: #4caf50;
+  background-color: #2e7d32; /* 濃い緑に変更 (コントラスト改善) */
   color: #fff;
   width: 100%;
   position: fixed;
@@ -18,6 +18,7 @@
   cursor: pointer;
   font-size: 24px;
   flex-shrink: 0;
+  color: #fff; /* タイトルのコントラストを明確に */
 }
 
 .nav-links {
@@ -33,7 +34,7 @@
 }
 
 .nav-links a {
-  color: #fff;
+  color: #f1f1f1; /* 若干暗くして可読性UP */
   text-decoration: none;
   font-size: 16px;
   padding: 8px 12px;
@@ -41,7 +42,7 @@
 }
 
 .nav-links a:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.3); /* 明るめにして視認性UP */
   border-radius: 4px;
 }
 
@@ -56,17 +57,23 @@
   padding: 10px 20px;
   font-size: 14px;
   cursor: pointer;
-  background-color: #fff;
-  color: #4caf50;
-  border: 1px solid #4caf50;
+  background-color: #2e7d32; /* ボタンを緑に変更 */
+  color: #fff; /* 白文字でコントラストUP */
+  border: 1px solid #1b5e20; /* 濃い緑ボーダー */
   border-radius: 4px;
   transition: background-color 0.3s, color 0.3s;
-  white-space: nowrap; /* テキストが折り返されないようにする */
-  width: auto; /* ボタン幅をテキストに合わせる */
-  overflow: hidden; /* 溢れたテキストを隠す */
-  text-overflow: ellipsis; /* 文字がボタン内に収まらない場合に省略記号を表示 */
+  white-space: nowrap;
+  width: auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.button:hover {
+  background-color: #1b5e20; /* ホバー時に濃く */
+  color: #fff;
 }
 
 body {
   padding-top: 60px;
+  background-color: #f9f9f9; /* ほんのりグレーでコントラストを整える */
 }
